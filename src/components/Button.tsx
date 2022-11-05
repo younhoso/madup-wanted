@@ -1,36 +1,61 @@
+import { JSXElementConstructor } from 'react';
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components';
 
 type ButtonProps = {
-  children?: string;
+  menuIcon?: string;
   isActive?: boolean;
-  onClick: () => void;
   customStyle?: FlattenInterpolation<ThemeProps<unknown>>;
+  onClick: () => void;
+  children?: string | undefined;
 };
 
-function Button({ isActive = false, customStyle, children, onClick }: ButtonProps) {
+function Button({ menuIcon, isActive = false, customStyle, children, onClick }: ButtonProps) {
   return (
-    <ButtonBx isActive={isActive} customStyle={customStyle} onClick={onClick}>
-      {children}
-    </ButtonBx>
+    <ButtonWape className={isActive ? 'on' : 'off'}>
+      <i className={menuIcon} />
+      <ButtonBx customStyle={customStyle} onClick={onClick}>
+        {children}
+      </ButtonBx>
+    </ButtonWape>
   );
 }
+
+const ButtonWape = styled.div`
+  position: relative;
+  border-radius: 10px;
+  padding: 0 20px;
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+  }
+
+  ${({ theme }) => {
+    const { fontWeight, colors } = theme;
+    return css`
+      &.on {
+        font-weight: ${fontWeight.bold};
+        background-color: ${colors.grayF1};
+        color: ${colors.blueF5};
+      }
+      &.off {
+        font-weight: ${fontWeight.bold};
+        background-color: ${colors.white};
+        color: ${colors.blue4E};
+      }
+      i {
+        font-weight: ${fontWeight.regular};
+      }
+    `;
+  }}
+`;
 
 const ButtonBx = styled.button<ButtonProps>`
   ${(props) => props.customStyle}
   height: 60px;
   font-size: 16px;
-  border-radius: 10px;
-
-  ${({ theme, isActive }) => {
-    const { fontWeight, colors } = theme;
-    return css`
-       {
-        font-weight: ${fontWeight.bold};
-        background-color: ${isActive ? colors.grayF1 : colors.white};
-        color: ${isActive ? colors.blueF5 : colors.gray4E};
-      }
-    `;
-  }}
+  color: inherit;
 `;
 
 export default Button;

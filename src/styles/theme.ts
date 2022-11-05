@@ -9,6 +9,7 @@ const colors = {
   grayF1: '#EDEFF1',
   grayAD: '#94A2AD',
   gray4E: '#3A474E',
+  grayDC: '#D1D8DC',
   blueF5: '#586CF5',
   blueFD: '#E5F4FD',
 };

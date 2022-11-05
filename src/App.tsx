@@ -1,5 +1,5 @@
 // @typescript-eslint/no-unused-vars
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import AdManagement from './pages/AdManagement';
 import Error from './pages/Error';
