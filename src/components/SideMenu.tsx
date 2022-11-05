@@ -1,14 +1,11 @@
-import { useState } from 'react';
+import { Link, useMatch } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import Button from './Button';
 import logo from '../assets/images/logo.png';
 
 function SideMenu() {
-  const [activeTag, setActiveTag] = useState(true);
-
-  const handleClick = () => {
-    setActiveTag(!activeTag);
-  };
+  const home = useMatch('/');
+  const adManagement = useMatch('/AdManagement');
 
   return (
     <SideMenuBx>
@@ -32,16 +29,34 @@ function SideMenu() {
       <AdWape>
         <Topic>광고 센터</Topic>
         <div>
-          <Button menuIcon="ic-menu01" isActive={activeTag} onClick={handleClick} customStyle={BtnStyle}>
-            대시보드
-          </Button>
+          <Link to="/">
+            <Button menuIcon="ic-menu01" isActive={home !== null} customStyle={BtnStyle}>
+              대시보드
+            </Button>
+          </Link>
         </div>
         <div>
-          <Button menuIcon="ic-menu02" isActive={!activeTag} onClick={handleClick} customStyle={BtnStyle}>
-            광고관리
-          </Button>
+          <Link to="/AdManagement">
+            <Button menuIcon="ic-menu02" isActive={adManagement !== null} customStyle={BtnStyle}>
+              광고관리
+            </Button>
+          </Link>
         </div>
       </AdWape>
+
+      <AdSubWape>
+        <div className="adSub">
+          <i className="ic-vector" />
+          <div className="adSubTit">
+            <h4>레버 이용 가이드</h4>
+            <p>시작하기 전에 알아보기</p>
+          </div>
+        </div>
+        <div className="termsService">
+          <p>레버는 함께 만들어갑니다</p>
+          <p>이용약관</p>
+        </div>
+      </AdSubWape>
     </SideMenuBx>
   );
 }
@@ -60,6 +75,8 @@ const SideMenuBx = styled.div`
   padding: 0 40px;
   box-sizing: border-box;
   position: fixed;
+  display: flex;
+  flex-direction: column;
 `;
 
 const LogoWape = styled.div`
@@ -120,6 +137,63 @@ const Topic = styled.p`
 
 const AdWape = styled.div`
   margin-top: 40px;
+  flex-grow: 0.9;
+`;
+
+const AdSubWape = styled.div`
+  ${({ theme }) => {
+    const { fontWeight, colors } = theme;
+    return css`
+      width: 100%;
+      .adSub {
+        font-size: 24px;
+        border-radius: 10px;
+        font-weight: ${fontWeight.regular};
+        background-color: ${colors.blueFD};
+        padding: 30px 0 30px 20px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+      }
+      .adSub i {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        color: #fff;
+        background-color: #586cf5;
+        border-radius: 50%;
+      }
+      .adSubTit {
+        padding-left: 8px;
+      }
+      .adSubTit h4 {
+        font-weight: ${fontWeight.bold};
+        font-size: 16px;
+        margin-bottom: 7px;
+      }
+      .adSubTit p {
+        font-size: 12px;
+        font-weight: ${fontWeight.regular};
+        color: ${colors.grayAD};
+      }
+      .termsService {
+        margin-top: 40px;
+        padding-left: 20px;
+      }
+      .termsService p {
+        font-size: 12px;
+        margin-bottom: 10px;
+        color: ${colors.grayAD};
+        &:last-child {
+          display: inline-block;
+          border-bottom: 1px solid ${colors.grayAD};
+        }
+      }
+    `;
+  }};
 `;
 
 export default SideMenu;

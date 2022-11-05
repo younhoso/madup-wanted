@@ -5,7 +5,7 @@ type ButtonProps = {
   menuIcon?: string;
   isActive?: boolean;
   customStyle?: FlattenInterpolation<ThemeProps<unknown>>;
-  onClick: () => void;
+  onClick?: () => void;
   children?: string | undefined;
 };
 
