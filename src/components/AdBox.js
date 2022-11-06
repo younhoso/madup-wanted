@@ -1,15 +1,14 @@
 import styled, { css } from 'styled-components';
-
-// type AdBoxProps = {
-// 	imp: number;
-// 	cost: number;
-// 	topic: string;
-// }
+import { useDatas } from '../context/MadupContext';
 
 function AdBox() {
+  const { datas } = useDatas();
+
   return (
     <AdBoxWape>
-      <div>dddd</div>
+      {datas.data?.map(({ id, title }) => (
+        <div key={id}>{title}</div>
+      ))}
     </AdBoxWape>
   );
 }
