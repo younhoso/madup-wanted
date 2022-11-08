@@ -1,21 +1,36 @@
 /* eslint-disable class-methods-use-this */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-class HttpAxios {
-  private instance: AxiosInstance;
+abstract class HttpClientInterface {
+  public instance: AxiosInstance;
 
-  constructor(baseURL: string | undefined, tokenRepository: object = {}) {
+  constructor(baseURL: string | undefined, options?: { [key: string]: unknown }) {
     this.instance = axios.create({
       baseURL,
       headers: {
         'Content-Type': 'application/json',
-        ...tokenRepository,
+        ...options,
+      },
+    });
+  }
+}
+
+class HttpAxios extends HttpClientInterface {
+  public instance: AxiosInstance;
+
+  constructor(baseURL: string | undefined, options = {}) {
+    super(baseURL, options);
+    this.instance = axios.create({
+      baseURL,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options,
       },
     });
   }
 
   private initiRequestInterceptor = () => {
-    this.instance.interceptors.request.use((config) => config, this.handleResponse);
+    this.instance.interceptors.request.use((config) => config);
   };
 
   private initiResponseInterceptor = () => {
@@ -25,9 +40,7 @@ class HttpAxios {
     );
   };
 
-  private handleResponse = ({ data }: AxiosResponse) => data;
-
-  protected handleError = (error: any) => Promise.reject(error);
+  protected handleError = (error: unknown) => Promise.reject(error);
 }
 
 export default HttpAxios;

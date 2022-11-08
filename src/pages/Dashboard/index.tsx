@@ -7,7 +7,6 @@ function Dashboard() {
   return (
     <>
       <SideMenu />
-
       <DashboardWape>
         <Header />
         <div className="dashboardHeade">

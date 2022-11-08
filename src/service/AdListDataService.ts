@@ -1,26 +1,20 @@
 import HttpAxios from '../http/httpAxios';
+import { Adv } from '../types';
 
-export interface Madup {
-  get(): Promise<[]>;
+interface AdsServiceInterface {
+  get(): Promise<Adv[]>;
 }
 
-class AdListDataService implements Madup {
-  private httpClient: any;
+class AdListDataService implements AdsServiceInterface {
+  protected httpClient;
 
   constructor(httpClient: HttpAxios) {
     this.httpClient = httpClient;
   }
 
-  get() {
-    return this.httpClient.instance.get('/ads');
-  }
-
-  create(data: any) {
-    this.httpClient.instance.create(JSON.stringify('/ads'));
-    // return this.httpClient.fetch("todos", {
-    //   method: "POST",
-    //   body: JSON.stringify({ data }),
-    // });
+  async get(): Promise<Adv[]> {
+    const { data } = await this.httpClient.instance.get('/ads');
+    return [...data];
   }
 }
 

@@ -23,8 +23,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "husky install && npx husky add .husky/pre-commit \"npx lint-staged -q\"",
-    "server-ad": "json-server --watch json/ad-list-data-set.json --port 4000",
-    "server-trend": "json-server --watch json/trend-data-set.json --port 4000"
+    "server-ad": "json-server --watch data/ad-list-data-set.json --port 4000",
+    "server-trend": "json-server --watch data/trend-data-set.json --port 4000"
   },
   "eslintConfig": {
     "extends": [
